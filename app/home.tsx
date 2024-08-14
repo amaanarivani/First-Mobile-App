@@ -8,23 +8,14 @@ export default function DetailsScreen() {
         <SafeAreaView>
             <View style={{}}>
                 <Button
-                    title='Back to Home'
+                    title='Back to Welcome Page'
                     color="orange"
                     onPress={() => { router.push("/") }}
                 />
             </View>
             <View style={styles.container}>
-                <Text style={styles.details}>Details</Text>
+                <Text style={styles.details}>Home</Text>
             </View>
-            {/* Works Only for IOS */}
-            {/* <View style={{ marginVertical: 20 }}>
-                <Button
-                    color='orange'
-                    title='Click me to Enter Details'
-                    onPress={() => Alert.prompt('Details', "Type your details below!", text => alert(text))
-                    }
-                />
-            </View> */}
         </SafeAreaView>
     );
 }

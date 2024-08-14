@@ -1,12 +1,12 @@
+import { Image, ImageBackground, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useState } from 'react'
 import { Entypo } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from 'react-native-paper';
+import { useRouter } from 'expo-router';
 
-function WelcomeScreen(props: any) {
-    const [show, setShow] = useState(true);
+const register = () => {
     const router = useRouter();
+    const [show, setShow] = useState(true);
     return (
         <ImageBackground
             style={
@@ -17,12 +17,11 @@ function WelcomeScreen(props: any) {
         >
             <Image style={styles.logo} source={require('@/assets/images/logo.png')} />
             <View style={{ width: "100%", alignItems: "center" }}>
-                <Text style={styles.mainText}>Login to your Account</Text>
+                <Text style={styles.mainText}>Register for an Account</Text>
                 <ScrollView automaticallyAdjustKeyboardInsets keyboardShouldPersistTaps={'handled'} showsVerticalScrollIndicator={false} style={{ width: "100%" }}>
                     <View
                         style={{
                             width: "100%",
-
                         }}
                     >
                         <TextInput
@@ -66,26 +65,64 @@ function WelcomeScreen(props: any) {
                             />
                         )}
                     </View>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            position: "relative",
+                            width: "100%",
+                        }}
+                    >
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Confirm your password"
+                            placeholderTextColor="#767676"
+                            secureTextEntry={show ? true : false}
+                        />
+                        {!show ? (
+                            <Entypo
+                                onPress={(e) => {
+                                    setShow(true);
+                                }}
+                                style={{ right: 40, top: 40, position: "absolute" }}
+                                name="eye"
+                                size={24}
+                                color="#707070"
+                            />
+                        ) : (
+                            <Entypo
+                                onPress={(e) => {
+                                    setShow(false);
+                                }}
+                                style={{ right: 40, top: 40, position: "absolute" }}
+                                name="eye-with-line"
+                                size={24}
+                                color="#707070"
+                            />
+                        )}
+                    </View>
+
                 </ScrollView>
                 <View style={{
-                    marginVertical: 15,
                     width: "90%",
+                    marginVertical: 15
                 }}>
-                    <Button style={{ backgroundColor: "#fc5c65", borderRadius: 10, paddingVertical: 5 }} mode="contained" onPress={() => { router.push("/home") }}>
-                        Login
+                    <Button style={{ backgroundColor: "#fc5c65", borderRadius: 10, paddingVertical: 5 }} mode="contained" onPress={() => { router.push("/Drawer/dashboard") }}>
+                        Register
                     </Button>
                 </View>
+
                 <View style={{ width: "90%", marginTop: 0 }}>
-                    <View style={{ flexDirection: "row", marginBottom: 13, justifyContent: "center" }}>
-                        <Text style={{ fontWeight: "600", paddingTop: 10 }}>Don't have an account yet? </Text>
-                        <Button textColor='white' mode='contained-tonal' buttonColor='#fc5c65' style={{}} onPress={() => router.push("/register")}>Register</Button>
+                    <View style={{ flexDirection: "row", marginBottom: 20, justifyContent: "center" }}>
+                        <Text style={{ fontWeight: "600", paddingTop: 10, }}>Already have an account? </Text>
+                        <Button textColor='white' mode='contained-tonal' buttonColor='#fc5c65' style={{}} onPress={() => router.push("/")}>log in</Button>
                     </View>
                 </View>
             </View>
-        </ImageBackground >
-    );
+        </ImageBackground>
+    )
 }
-export default WelcomeScreen;
+
+export default register;
 
 const styles = StyleSheet.create({
     background: {
