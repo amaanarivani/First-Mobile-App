@@ -2,11 +2,14 @@ import { Link, useRouter } from 'expo-router';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import WelcomeScreen from './Screens/WelcomeScreen';
+import { PaperProvider } from 'react-native-paper';
 
 export default function HomeScreen() {
   const router = useRouter();
   return (
-   <WelcomeScreen/>
+    // <PaperProvider>
+      <WelcomeScreen />
+    // </PaperProvider>
   );
 }
 
