@@ -106,7 +106,7 @@ const register = () => {
                     width: "90%",
                     marginVertical: 15
                 }}>
-                    <Button style={{ backgroundColor: "#fc5c65", borderRadius: 10, paddingVertical: 5 }} mode="contained" onPress={() => { router.push("/Drawer/dashboard") }}>
+                    <Button style={{ backgroundColor: "#9061F9", borderRadius: 10, paddingVertical: 5 }} mode="contained" onPress={() => { router.push("/") }}>
                         Register
                     </Button>
                 </View>
@@ -114,7 +114,7 @@ const register = () => {
                 <View style={{ width: "90%", marginTop: 0 }}>
                     <View style={{ flexDirection: "row", marginBottom: 20, justifyContent: "center" }}>
                         <Text style={{ fontWeight: "600", paddingTop: 10, }}>Already have an account? </Text>
-                        <Button textColor='white' mode='contained-tonal' buttonColor='#fc5c65' style={{}} onPress={() => router.push("/")}>log in</Button>
+                        <Button textColor='white' mode='contained-tonal' buttonColor='#9061F9' style={{}} onPress={() => router.push("/")}>Login</Button>
                     </View>
                 </View>
             </View>

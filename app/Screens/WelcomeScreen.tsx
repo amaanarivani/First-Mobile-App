@@ -10,9 +10,9 @@ function WelcomeScreen(props: any) {
     return (
         <ImageBackground
             style={
-                styles.background
+            {...styles.background, height: "100%", flex: 1}
             }
-            resizeMode='stretch'
+            resizeMode='cover'
             source={{ uri: "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?cs=srgb&dl=pexels-maksgelatin-4352247.jpg&fm=jpg" }}
         >
             <Image style={styles.logo} source={require('@/assets/images/logo.png')} />
@@ -71,14 +71,14 @@ function WelcomeScreen(props: any) {
                     marginVertical: 15,
                     width: "90%",
                 }}>
-                    <Button style={{ backgroundColor: "#fc5c65", borderRadius: 10, paddingVertical: 5 }} mode="contained" onPress={() => { router.push("/home") }}>
+                    <Button style={{ backgroundColor: "#9061F9", borderRadius: 10, paddingVertical: 5 }} mode="contained" onPress={() => { router.push("/Drawer/home") }}>
                         Login
                     </Button>
                 </View>
                 <View style={{ width: "90%", marginTop: 0 }}>
                     <View style={{ flexDirection: "row", marginBottom: 13, justifyContent: "center" }}>
                         <Text style={{ fontWeight: "600", paddingTop: 10 }}>Don't have an account yet? </Text>
-                        <Button textColor='white' mode='contained-tonal' buttonColor='#fc5c65' style={{}} onPress={() => router.push("/register")}>Register</Button>
+                        <Button textColor='white' mode='contained-tonal' buttonColor='#9061F9' style={{}} onPress={() => router.push("/register")}>Register</Button>
                     </View>
                 </View>
             </View>

@@ -1,13 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from "expo-router/drawer";
+import { Tabs, useRouter } from 'expo-router';
+import { View, Text, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+
 
 const _layout = () => {
+    const Tab = createBottomTabNavigator();
+    const router = useRouter();
     return (
+        // <View>
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer
-                initialRouteName='dashboard'
+                initialRouteName='home'
                 screenOptions={{
                     drawerPosition: 'left',
                     drawerStyle: {
@@ -18,6 +26,14 @@ const _layout = () => {
                     drawerActiveBackgroundColor: "#ffffff",
                 }}
             >
+
+                <Drawer.Screen
+                    name="home"
+                    options={{
+                        drawerLabel: 'Home',
+                        title: 'Home',
+                    }}
+                />
                 <Drawer.Screen
                     name="dashboard"
                     options={{
@@ -26,23 +42,18 @@ const _layout = () => {
                     }}
                 />
                 <Drawer.Screen
-                    name="profile" 
+                    name="profile"
                     options={{
                         drawerLabel: 'Profile',
                         title: 'Profile',
                     }}
                 />
-                <Drawer.Screen
-                    name="index" 
-                    options={{
-                        drawerLabel: 'Logout',
-                        title: 'Logout',
-                    }}
-                />
             </Drawer>
         </GestureHandlerRootView>
+        // </View>
     )
 }
+
 
 export default _layout
 
