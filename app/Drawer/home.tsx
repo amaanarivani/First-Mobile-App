@@ -1,64 +1,113 @@
 import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TabNavigation from '@/components/TabNavigation'
 import { usePathname, useRouter } from 'expo-router'
 import { Button } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        Sno: "1",
-        title: 'React Native',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        Sno: "2",
-        title: 'Expo',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        Sno: "3",
-        title: 'React Native Paper',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d64',
-        Sno: "4",
-        title: 'React Navigation',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d67',
-        Sno: "5",
-        title: 'TypeScript',
-    },
-];
-
-type ItemProps = { title: string, Sno: string };
-const Item = ({ title, Sno }: ItemProps) => (
-    <View style={styles.item}>
-        <Text style={styles.serial}>{Sno}</Text>
-        <Text style={styles.title}>{title}</Text>
-    </View>
-);
 
 const home = () => {
     const router = useRouter();
     const pathname = usePathname();
-    useEffect(() => {
-        console.log(pathname);
-        
-    },[])
+    const [dataSource, setDataSource] = useState([
+        { id: 1, title: 'Button' },
+        { id: 2, title: 'Card' },
+        { id: 3, title: 'Input' },
+        { id: 4, title: 'Avatar' },
+        { id: 5, title: 'CheckBox' },
+        { id: 6, title: 'Header' },
+        { id: 7, title: 'Icon' },
+        { id: 8, title: 'Lists' },
+        { id: 9, title: 'Rating' },
+        { id: 10, title: 'Pricing' },
+        { id: 11, title: 'Avatar' },
+        { id: 12, title: 'CheckBox' },
+        { id: 13, title: 'Header' },
+        { id: 14, title: 'Icon' },
+        { id: 15, title: 'Lists' },
+        { id: 16, title: 'Rating' },
+        { id: 17, title: 'Pricing' },
+    ]);
+
+    const EmptyListMessage = ({ item } : any) => {
+        return (
+            // Flat List Item
+            <Text
+                style={styles.emptyListStyle}
+                onPress={() => getItem(item)}>
+                No Data Found
+            </Text>
+        );
+    };
+
+    const ItemView = ({ item } : any) => {
+        return (
+            // Flat List Item
+            <Text
+                style={styles.itemStyle}
+                onPress={() => getItem(item)}>
+                {item.id}
+                {'.'}
+                {item.title.toUpperCase()}
+            </Text>
+        );
+    };
+
+    const ItemSeparatorView = () => {
+        return (
+            // Flat List Item Separator
+            <View
+                style={{
+                    height: 0.5,
+                    width: '100%',
+                    backgroundColor: '#C8C8C8',
+                }}
+            />
+        );
+    };
+
+    const ListHeader = () => {
+        //View to set in Header
+        return (
+            <View style={styles.headerFooterStyle}>
+                <Text style={styles.textStyle}>
+                    This is Header
+                </Text>
+            </View>
+        );
+    };
+
+    const ListFooter = () => {
+        //View to set in Footer
+        return (
+            <View style={styles.headerFooterStyle}>
+                <Text style={styles.textStyle}>
+                    This is Footer
+                </Text>
+            </View>
+        );
+    };
+
+    const getItem = (item: any) => {
+        // Function for click on an item
+        alert('Id : ' + item.id + ' Title : ' + item.title);
+    };
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ width: 150, marginVertical: 20, marginStart: 10 }}>
                 <Button textColor='white' mode='contained-tonal' buttonColor='#9061F9' style={{}} onPress={() => router.push("/")}>Back to Login</Button>
             </View>
-            <Text style={{ textAlign: "center", fontSize: 25, fontWeight: "bold" }}>Technologies Used</Text>
+            <Text style={{ textAlign: "center", fontSize: 25, fontWeight: "bold" }}>This is a FlatList</Text>
                 <FlatList
-                    data={DATA}
-                    renderItem={({ item }) => <Item title={item.title} Sno={item.Sno} />}
-                    keyExtractor={item => item.id}
+                    data={dataSource}
+                    keyExtractor={(item, index) => index.toString()}
+                    ItemSeparatorComponent={ItemSeparatorView}
+                    //Header to show above listview
+                    ListHeaderComponent={ListHeader}
+                    //Footer to show below listview
+                    ListFooterComponent={ListFooter}
+                    renderItem={ItemView}
+                    ListEmptyComponent={EmptyListMessage}
                     style={{marginBottom: 60}}
-                    scrollEnabled
                 />
             <TabNavigation pathname={pathname} />
         </SafeAreaView>
@@ -85,5 +134,24 @@ const styles = StyleSheet.create({
     serial: {
         fontSize: 25,
         color: "#ffff"
+    },
+    emptyListStyle: {
+        padding: 10,
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    itemStyle: {
+        padding: 10,
+    },
+    headerFooterStyle: {
+        width: '100%',
+        height: 45,
+        backgroundColor: '#9061F9',
+    },
+    textStyle: {
+        textAlign: 'center',
+        color: '#fff',
+        fontSize: 18,
+        padding: 7,
     },
 })
