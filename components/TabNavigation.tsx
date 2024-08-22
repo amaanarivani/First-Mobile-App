@@ -1,8 +1,13 @@
 import { Entypo, Feather, FontAwesome, FontAwesome5, FontAwesome6, Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons"
 import { router } from "expo-router"
+import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native"
 
 const TabNavigation = ({ pathname }: { pathname: string }) => {
+    const [menuVisible, setMenuVisible] = useState(false);
+
+    const openMenu = () => setMenuVisible(true);
+    const closeMenu = () => setMenuVisible(false);
 
     return (
         <View style={{ borderTopColor: "#8f8f8f44", borderTopWidth: 0.5, position: "absolute", zIndex: 700, bottom: 0, height: 60, width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-around", alignContent: "center", alignItems: "center", backgroundColor: '#fff' }}>

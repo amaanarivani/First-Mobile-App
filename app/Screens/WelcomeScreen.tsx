@@ -1,16 +1,26 @@
 import { Entypo } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { useFocusEffect, useRouter } from 'expo-router';
+import React, { useRef, useState } from 'react';
+import { BackHandler, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 function WelcomeScreen(props: any) {
     const [show, setShow] = useState(true);
     const router = useRouter();
+    const backHand = useRef<any>();
+    useFocusEffect(() => {
+        backHand.current = BackHandler.addEventListener("hardwareBackPress", () => {
+            BackHandler.exitApp();
+            return true;
+        });
+        return () => {
+            console.log("This route is now unfocused.-onsignin");
+        };
+    });
     return (
         <ImageBackground
             style={
-            {...styles.background, height: "100%", flex: 1}
+                { ...styles.background, height: "100%", flex: 1 }
             }
             resizeMode='cover'
             source={{ uri: "https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?cs=srgb&dl=pexels-maksgelatin-4352247.jpg&fm=jpg" }}

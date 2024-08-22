@@ -1,13 +1,14 @@
-import { FlatList, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { BackHandler, FlatList, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import TabNavigation from '@/components/TabNavigation'
-import { usePathname, useRouter } from 'expo-router'
+import { useFocusEffect, usePathname, useRouter } from 'expo-router'
 import { Button } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
 const home = () => {
     const router = useRouter();
     const pathname = usePathname();
+    const backHand = useRef<any>();
     const [dataSource, setDataSource] = useState([
         { id: 1, title: 'Button' },
         { id: 2, title: 'Card' },
@@ -28,7 +29,7 @@ const home = () => {
         { id: 17, title: 'Pricing' },
     ]);
 
-    const EmptyListMessage = ({ item } : any) => {
+    const EmptyListMessage = ({ item }: any) => {
         return (
             // Flat List Item
             <Text
@@ -39,7 +40,7 @@ const home = () => {
         );
     };
 
-    const ItemView = ({ item } : any) => {
+    const ItemView = ({ item }: any) => {
         return (
             // Flat List Item
             <Text
@@ -91,24 +92,31 @@ const home = () => {
         // Function for click on an item
         alert('Id : ' + item.id + ' Title : ' + item.title);
     };
+    useFocusEffect(() => {
+        backHand.current = BackHandler.addEventListener("hardwareBackPress", () => {
+            BackHandler.exitApp();
+            console.log("22");
+            return true;
+        })
+        return () => {
+            backHand.current = BackHandler.removeEventListener("hardwareBackPress", () => null)
+        }
+    })
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ width: 150, marginVertical: 20, marginStart: 10 }}>
-                <Button textColor='white' mode='contained-tonal' buttonColor='#9061F9' style={{}} onPress={() => router.push("/")}>Back to Login</Button>
-            </View>
             <Text style={{ textAlign: "center", fontSize: 25, fontWeight: "bold" }}>This is a FlatList</Text>
-                <FlatList
-                    data={dataSource}
-                    keyExtractor={(item, index) => index.toString()}
-                    ItemSeparatorComponent={ItemSeparatorView}
-                    //Header to show above listview
-                    ListHeaderComponent={ListHeader}
-                    //Footer to show below listview
-                    ListFooterComponent={ListFooter}
-                    renderItem={ItemView}
-                    ListEmptyComponent={EmptyListMessage}
-                    style={{marginBottom: 60}}
-                />
+            <FlatList
+                data={dataSource}
+                keyExtractor={(item, index) => index.toString()}
+                ItemSeparatorComponent={ItemSeparatorView}
+                //Header to show above listview
+                ListHeaderComponent={ListHeader}
+                //Footer to show below listview
+                ListFooterComponent={ListFooter}
+                renderItem={ItemView}
+                ListEmptyComponent={EmptyListMessage}
+                style={{ marginBottom: 60 }}
+            />
             <TabNavigation pathname={pathname} />
         </SafeAreaView>
     )
