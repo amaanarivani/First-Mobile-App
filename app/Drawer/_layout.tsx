@@ -1,60 +1,104 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from "expo-router/drawer";
-import { Tabs, useRouter } from 'expo-router';
-import { View, Text, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Pressable } from 'react-native';
+import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { Button, Divider, Menu } from 'react-native-paper';
 
+const CustomDrawerContent = (props: any) => {
+    const router = useRouter();
 
+    // Get the active route name
+    const activeRoute = props.state.routeNames[props.state.index];
+
+    return (
+        <DrawerContentScrollView
+            {...props}
+            style={{ backgroundColor: "#9061F9", }}
+        >
+            <Pressable onPress={() => { router.push('/Drawer/profile') }}>
+                <View style={styles.userInfoSection}>
+                    <Image
+                        source={require("@/assets/images/avatar.png")} // Ensure the correct path to your local image
+                        style={styles.avatar}
+                    />
+                    <Text style={styles.userName}>John Doe</Text>
+                </View>
+            </Pressable>
+            <DrawerItem
+                label="Home"
+                onPress={() => router.navigate('/Drawer/home')}
+                focused={activeRoute === 'home'}
+                style={activeRoute === 'home' ? styles.activeItem : null}
+                labelStyle={activeRoute === 'home' ? styles.activeLabel : styles.inactiveLabel}
+            />
+            <DrawerItem
+                label="Dashboard"
+                onPress={() => router.navigate('/Drawer/dashboard')}
+                focused={activeRoute === 'dashboard'}
+                style={activeRoute === 'dashboard' ? styles.activeItem : null}
+                labelStyle={activeRoute === 'dashboard' ? styles.activeLabel : styles.inactiveLabel}
+            />
+            <DrawerItem
+                label="Profile"
+                onPress={() => router.navigate('/Drawer/profile')}
+                focused={activeRoute === 'profile'}
+                style={activeRoute === 'profile' ? styles.activeItem : null}
+                labelStyle={activeRoute === 'profile' ? styles.activeLabel : styles.inactiveLabel}
+            />
+            <DrawerItem
+                label="Logout"
+                onPress={() => router.push('/')}
+                style={styles.drawerItem}
+                labelStyle={styles.inactiveLabel}
+            />
+        </DrawerContentScrollView>
+    );
+};
 
 const _layout = () => {
-    const Tab = createBottomTabNavigator();
-    const router = useRouter();
     return (
-        // <View>
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer
                 initialRouteName='home'
                 screenOptions={{
                     drawerPosition: 'left',
-                    drawerStyle: {
-                        backgroundColor: "#9061F9",
-                    },
-                    drawerInactiveTintColor: "#FFFFFF",
-                    drawerActiveTintColor: "#9061F9",
-                    drawerActiveBackgroundColor: "#ffffff",
                 }}
-            >
-
-                <Drawer.Screen
-                    name="home"
-                    options={{
-                        drawerLabel: 'Home',
-                        title: 'Home',
-                    }}
-                />
-                <Drawer.Screen
-                    name="dashboard"
-                    options={{
-                        drawerLabel: 'Dashboard',
-                        title: 'Dashboard',
-                    }}
-                />
-                <Drawer.Screen
-                    name="profile"
-                    options={{
-                        drawerLabel: 'Profile',
-                        title: 'Profile',
-                    }}
-                />
-            </Drawer>
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
+            />
         </GestureHandlerRootView>
-        // </View>
-    )
-}
+    );
+};
 
+export default _layout;
 
-export default _layout
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    userInfoSection: {
+        padding: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    avatar: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+    },
+    userName: {
+        marginLeft: 15,
+        fontSize: 18,
+        color: '#fff',
+    },
+    activeItem: {
+        backgroundColor: '#ffffff',
+    },
+    activeLabel: {
+        color: '#9061F9',
+    },
+    inactiveLabel: {
+        color: '#FFFFFF',
+    },
+    drawerItem: {
+        marginTop: 10,
+    },
+});
